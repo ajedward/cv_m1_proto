@@ -1,0 +1,114 @@
+@CHARSET "UTF-8";
+
+#logo_container {
+	position: fixed;
+	opacity:0.3;
+	filter:alpha(opacity=30); /* For IE8 and earlier */
+	left:0px;
+	top:0px;
+}	
+	
+#msg {
+	position: fixed;
+	opacity:0.3;
+	filter:alpha(opacity=30); /* For IE8 and earlier */
+	left:190px;
+	top:15px;
+}	
+	
+#header {
+	height:40px;
+}
+
+li.clientItem {
+	padding-top:none;
+	margin-top:none;
+}
+
+ul {
+	list-style:none;
+}
+
+ul.imageList {
+	/*float:left; */
+	/* primarily for IE5, but also to prevent 'shrink wrapping' of the nav panel*/
+	width:10000px;
+	margin:0;
+	padding:0;
+	/* border-bottom:2px solid #135; */
+	padding-bottom:20px;
+	list-style:none;
+}
+
+ul.imageList li {
+	background:none;
+	display:inline;
+	padding:0;
+}/* below rules are only there for reference */
+
+ul.imageList li img {
+/*	width:1025px;
+	heigh:700px; 
+	
+	Max size:
+width: 1461px; height: 796px;
+		*/
+	/*border:1px solid black; */
+}
+
+ul.imageList li {
+	background:none;
+	display:inline;
+	padding:0;
+	width:1800px; 
+}
+
+ul.imageList li a, ul.imageList li strong {
+	float:left;
+	/* make sure IE 5 mac does not extend them all the way
+	     across the width of the page.  */
+	/* width:auto; */ 
+	padding:5px 9px 3px;
+	
+	/* generates a slight bevelled look to the navigation */
+	border-left:1px solid #579;
+	border-right:1px solid #135;
+	color:#def;
+	text-transform:uppercase;
+	text-decoration:none;
+}
+
+.first-in-view {
+	border: solid 1px red;
+}
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
