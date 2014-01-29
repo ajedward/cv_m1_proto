@@ -7,11 +7,11 @@ var gFirstImgInViewPort = null;
 var pos = null;
 
 function contructPosMap2() {
-    console.log("contructPosMap() -> ENTER");
+	log.debug("contructPosMap() -> ENTER");
 	pos = $(".img").map(function(){
 	  var $this = $(this);
 	  
-	  console.log("this is " + $this + "this.offset().top is " + $this.offset().top);
+	  log.debug("this is " + $this + "this.offset().top is " + $this.offset().top);
 	  return {
 	    el: $this,
 	    id: $this.attr('id'),
@@ -23,11 +23,11 @@ function contructPosMap2() {
 
 function contructPosMap() {
 	return function() {
-	    console.log("contructPosMap() -> ENTER");
+		log.debug("contructPosMap() -> ENTER");
 		pos = $(".img").map(function(){
 		  var $this = $(this);
 		  
-		  console.log("this is " + $this + "this.offset().top is " + $this.offset().top);
+		  log.debug("this is " + $this + "this.offset().top is " + $this.offset().top);
 		  return {
 		    el: $this,
 		    id: $this.attr('id'),
@@ -40,24 +40,24 @@ function contructPosMap() {
 
 function givenElementInViewport (el) {
     return function () {
-    	console.log('Inside: givenElementInViewport()');
+    	log.debug('Inside: givenElementInViewport()');
         if ( isElementInViewport(el) ) {
-            //your code here, e.g. console.log('is ' + el);
-            console.log('is ' + el);
+            //your code here, e.g. log.debug('is ' + el);
+        	log.debug('is ' + el);
         }
     }
 }
 
 function goUp () {
-	console.log("goUp() -> ENTER");	
+	log.debug("goUp() -> ENTER");	
 }
 
 function goDown () {
-	console.log("goDown() -> ENTER");
+	log.debug("goDown() -> ENTER");
 }
 
 function doResizeWidth() {
-	console.log("doResize() -> ENTER");
+	log.debug("doResize() -> ENTER");
 	var newImageWidth = $( window ).width() - 180;
 	
 	if (newImageWidth > IMG_MAXWIDTH) {
@@ -70,7 +70,7 @@ function doResizeWidth() {
 }
 
 function doResize() {
-	console.log("doResize() -> ENTER");
+	log.debug("doResize() -> ENTER");
 	var newImageHeight = $( window ).height() - 60;
 	
 	if (newImageHeight > IMG_MAXHEIGHT) {
@@ -87,24 +87,24 @@ $( window ).resize(function() {
 });
 
 function goLeft () {
-	console.log("goLeft() -> ENTER");
+	log.debug("goLeft() -> ENTER");
 	
 	if (gFirstImgInViewPort == null) {
 		return;
 	}
 	
-	console.log("goLeft() -> Current element is " + gFirstImgInViewPort.id);
+	log.debug("goLeft() -> Current element is " + gFirstImgInViewPort.id);
 	// Find all the images in our parent, and then find our index with that set of images
 	var index = $(document).find(".img").index(gFirstImgInViewPort.el);
 	var nextImageIndex = index - 1;
 	
-	console.log("goLeft() -> Current element index is " + index);
+	log.debug("goLeft() -> Current element index is " + index);
 	
 	var newLeftPos = 0;
 	var newTopPos = 0;
 	if (pos != null) {
 		
-		console.log('goLeft() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
+		log.debug('goLeft() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
 				' ; pos.length is ' + pos.length);
 		if (gFirstImgInViewPortIdx <= 0) {
     		newLeftPos = pos[pos.length - 1].left;
@@ -116,10 +116,10 @@ function goLeft () {
 		}
 	}
 	
-	console.log('goRight() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
+	log.debug('goLeft() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
 			' ; prevPos: ' + pos[gFirstImgInViewPortIdx].left);
 	if (newLeftPos > pos[gFirstImgInViewPortIdx].left) {
-		console.log('goRight() -> nextLine');
+		log.debug('goLeft() -> nextLine');
         
         $('html, body').animate({
             scrollTop: newTopPos - 10
@@ -140,24 +140,24 @@ function goLeft () {
 }
 
 function goRight () {
-	console.log("goRight() -> ENTER");
+	log.debug("goRight() -> ENTER");
 	
 	if (gFirstImgInViewPort == null) {
 		return;
 	}
 	
-	console.log("Current element is " + gFirstImgInViewPort.id);
+	log.debug("Current element is " + gFirstImgInViewPort.id);
 	// Find all the images in our parent, and then find our index with that set of images
 	var index = $(document).find(".img").index(gFirstImgInViewPort.el);
 	var nextImageIndex = index + 1;
 	
-	console.log("Current element index is " + index);
+	log.debug("Current element index is " + index);
 	
 	var newLeftPos = 0;
 	var newTopPos = 0;
 	if (pos != null) {
 		
-		console.log('goRight() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
+		log.debug('goRight() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
 				' ; pos.length is ' + pos.length);
 		if (gFirstImgInViewPortIdx >= pos.length - 1) {
     		newLeftPos = 0;
@@ -169,10 +169,10 @@ function goRight () {
 		}
 	}
 	
-	console.log('goRight() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
+	log.debug('goRight() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
 			' ; prevPos: ' + pos[gFirstImgInViewPortIdx].left);
 	if (newLeftPos < pos[gFirstImgInViewPortIdx].left) {
-		console.log('goRight() -> nextLine');
+		log.debug('goRight() -> nextLine');
         $('html, body').animate({
             scrollLeft: newLeftPos - 30
         }, 800);
@@ -192,11 +192,11 @@ function goRight () {
 
 function firstImageInViewport() {
     return function () {
-//    	console.log('Inside: idFirstElementInViewport()');
+//    	log.debug('Inside: idFirstElementInViewport()');
 
     	var firstImgInViewPort = null;
     	for (var i = 0; i < pos.length; ++i) {
-            //console.log('firstImageInViewport() -> loop element is ' + i + "; pos[i].el is " + pos[i].el[0]);
+            //log.debug('firstImageInViewport() -> loop element is ' + i + "; pos[i].el is " + pos[i].el[0]);
     		if ( isElementInViewport(pos[i].el[0]) ) {
 				if (firstImgInViewPort == null) {
 					firstImgInViewPort = pos[i];
@@ -211,20 +211,20 @@ function firstImageInViewport() {
         	}
     	}
 //		if ( isElementInViewport(el) ) {
-//            //your code here, e.g. console.log('is ' + el);
-//            console.log('is ' + el);
+//            //your code here, e.g. log.debug('is ' + el);
+//            log.debug('is ' + el);
 //        }
 
         if (firstImgInViewPort == null) {
-            console.log("firstImageInViewport() -> no first image in viewport");
+            log.debug("firstImageInViewport() -> no first image in viewport");
             gFirstImgInViewPort = null;
             gFirstImgInViewPortIdx = -1;
         } 
         else {
-//            console.log("firstImageInViewport() -> first image in viewport: " + firstImgInViewPort);
-//            console.log("firstImageInViewport() -> first image in viewport element: " + firstImgInViewPort.el);
-//            console.log("firstImageInViewport() -> first image in viewport element id: " + firstImgInViewPort.id);
-//            console.log("firstImageInViewport() -> first image in viewport pos... left: " + firstImgInViewPort.left + 
+//            log.debug("firstImageInViewport() -> first image in viewport: " + firstImgInViewPort);
+//            log.debug("firstImageInViewport() -> first image in viewport element: " + firstImgInViewPort.el);
+//            log.debug("firstImageInViewport() -> first image in viewport element id: " + firstImgInViewPort.id);
+//            log.debug("firstImageInViewport() -> first image in viewport pos... left: " + firstImgInViewPort.left + 
 //                    " ; top: " + firstImgInViewPort.top);
             gFirstImgInViewPort = firstImgInViewPort;
             gFirstImgInViewPortIdx = firstImgInViewPortIdx;

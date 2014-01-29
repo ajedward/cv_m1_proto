@@ -8,15 +8,15 @@
 	top:0px;
 }	
 	
-#msg {
+#mainnav {
 	position: fixed;
-	opacity:0.3;
-	filter:alpha(opacity=30); /* For IE8 and earlier */
+	opacity:0.5;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
 	left:190px;
 	top:15px;
 }	
 	
-#header {
+header #header {
 	height:40px;
 }
 
@@ -29,24 +29,29 @@ ul {
 	list-style:none;
 }
 
-ul.imageList {
+/* conversion to html5 means the uls might become sections.
+   prefixed css rule with generic version '.portfolio' */
+/* TODO: remove ul.imageList when deprecated */
+.portfolio {
 	/*float:left; */
 	/* primarily for IE5, but also to prevent 'shrink wrapping' of the nav panel*/
-	width:10000px;
+	width: 40000px;
 	margin:0;
 	padding:0;
 	/* border-bottom:2px solid #135; */
 	padding-bottom:20px;
 	list-style:none;
+	overflow: hidden;
 }
 
-ul.imageList li {
+/* TODO: remove ul.imageList when deprecated */
+.portfolio .portfolioElement {
 	background:none;
-	display:inline;
+	float: left;
 	padding:0;
 }/* below rules are only there for reference */
 
-ul.imageList li img {
+.portfolio li img {
 /*	width:1025px;
 	heigh:700px; 
 	
@@ -56,14 +61,14 @@ width: 1461px; height: 796px;
 	/*border:1px solid black; */
 }
 
-ul.imageList li {
+.portfolio li {
 	background:none;
 	display:inline;
 	padding:0;
 	width:1800px; 
 }
 
-ul.imageList li a, ul.imageList li strong {
+.portfolio li a, .portfolio li strong {
 	float:left;
 	/* make sure IE 5 mac does not extend them all the way
 	     across the width of the page.  */
@@ -107,8 +112,25 @@ body.loading {
     overflow: hidden;   
 }
 
+body {
+    overflow-x: hidden;
+    overflow-y: auto;	
+}
+
 /* Anytime the body has the loading class, our
    modal element will be visible */
 body.loading .modal {
     display: block;
+}
+
+.portfolioContainer {
+	/* border: 1px green solid; */
+}
+
+.portfolio_element {
+	display: inline;
+}
+
+.left {
+    float: left;
 }
