@@ -183,9 +183,19 @@ function goRight () {
     	}, 800);
 	}
 	else {
-        $('html, body').animate({
-            scrollLeft: newLeftPos - 30
+		log.debug("About to animate right movement, left: \"+=100\"");
+//        $('html, body').animate({
+//            scrollLeft: newLeftPos - 30
+//        }, 800);
+		var divLocation = $('#' + gFirstImgInViewPort.id).offset();
+		var outerWidth = $('#' + gFirstImgInViewPort.id).outerWidth();
+        $('#client01_images').animate({
+        	'marginLeft': divLocation.left - outerWidth
         }, 500);
+//        $("#source").animate({left: (left + 10), top:(top + 10 + ((current)*60))}, 500, function()
+//        		 { //comments });//        $('html, body').animate({
+//            left: newLeftPos - 30
+//        }, 500);
 	}
 	doResizeWidth();
 }

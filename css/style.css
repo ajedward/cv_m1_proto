@@ -14,7 +14,11 @@
 	filter:alpha(opacity=50); /* For IE8 and earlier */
 	left:190px;
 	top:15px;
-}	
+}
+
+#client01_images {
+	display: block;
+}
 	
 header #header {
 	height:40px;
@@ -41,7 +45,7 @@ ul {
 	/* border-bottom:2px solid #135; */
 	padding-bottom:20px;
 	list-style:none;
-	overflow: hidden;
+    overflow: hidden;
 }
 
 /* TODO: remove ul.imageList when deprecated */
