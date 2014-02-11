@@ -1,17 +1,18 @@
 var IMG_MAXHEIGHT = 768;
-var IMG_MAXWIDTH = 768;
+var IMG_MAXWIDTH = 900;
 
 var gCurrentImageId = 'client01_image01';
-var gFirstImgInViewPort = null;
+var gFirstImgInViewPortIdx = 0;
+//var gFirstImgInViewPort = null;
 
 var pos = null;
 
 function contructPosMap2() {
-	log.debug("contructPosMap() -> ENTER");
+	console.log("DEBUG: contructPosMap() -> ENTER");
 	pos = $(".img").map(function(){
 	  var $this = $(this);
 	  
-	  log.debug("this is " + $this + "this.offset().top is " + $this.offset().top);
+	  console.log("DEBUG: this is " + $this + "this.offset().top is " + $this.offset().top);
 	  return {
 	    el: $this,
 	    id: $this.attr('id'),
@@ -23,11 +24,11 @@ function contructPosMap2() {
 
 function contructPosMap() {
 	return function() {
-		log.debug("contructPosMap() -> ENTER");
+		console.log("DEBUG: contructPosMap() -> ENTER");
 		pos = $(".img").map(function(){
 		  var $this = $(this);
 		  
-		  log.debug("this is " + $this + "this.offset().top is " + $this.offset().top);
+		  console.log("DEBUG: this is " + $this + "this.offset().top is " + $this.offset().top);
 		  return {
 		    el: $this,
 		    id: $this.attr('id'),
@@ -40,43 +41,59 @@ function contructPosMap() {
 
 function givenElementInViewport (el) {
     return function () {
-    	log.debug('Inside: givenElementInViewport()');
-        if ( isElementInViewport(el) ) {
-            //your code here, e.g. log.debug('is ' + el);
-        	log.debug('is ' + el);
+    	console.log('DEBUG: Inside: givenElementInViewport()');
+        if ( elementInViewport(el) ) {
+            //your code here, e.g. console.log('DEBUG: is ' + el);
+        	console.log('DEBUG: is ' + el);
         }
     }
 }
 
 function goUp () {
-	log.debug("goUp() -> ENTER");	
+	console.log("DEBUG: goUp() -> ENTER");	
 }
 
 function goDown () {
-	log.debug("goDown() -> ENTER");
+	console.log("DEBUG: goDown() -> ENTER");
 }
 
 function doResizeWidth() {
-	log.debug("doResize() -> ENTER");
+	console.log("DEBUG: doResizeWidth() -> ENTER");
 	var newImageWidth = $( window ).width() - 180;
+	console.log("DEBUG: doResize() -> newImageWidth set to " + newImageWidth);
 	
 	if (newImageWidth > IMG_MAXWIDTH) {
 		//$( "body" ).prepend( "<div>" + newImageWidth + "</div>" );		
 		newImageWidth = IMG_MAXWIDTH;
 	}
-	$( ".img" ).height(newImageWidth);
+	
+	console.log("DEBUG: doResize() -> resizing width for .img to " + newImageWidth);
+	$( ".img" ).width(newImageWidth);
+
+//	var newImageHeight = $( window ).height() - 60;
+//
+//	if (newImageHeight > IMG_MAXHEIGHT) {
+//		//$( "body" ).prepend( "<div>" + newImageWidth + "</div>" );		
+//		newImageHeight = IMG_MAXHEIGHT;
+//		$( ".img" ).width(newImageWidth - 200);
+//	}
+
+	
 	contructPosMap2();
 	//$( "body" ).prepend( "<div>" + $( window ).width() + "</div>" );
 }
 
 function doResize() {
-	log.debug("doResize() -> ENTER");
+	console.log("DEBUG: doResize() -> ENTER");
 	var newImageHeight = $( window ).height() - 60;
 	
+	console.log("DEBUG: doResize() -> newImageHeight set to " + newImageHeight);
 	if (newImageHeight > IMG_MAXHEIGHT) {
 		//$( "body" ).prepend( "<div>" + newImageWidth + "</div>" );		
 		newImageHeight = IMG_MAXHEIGHT;
 	}
+
+	console.log("DEBUG: doResize() -> resizing height for .img to " + newImageHeight);
 	$( ".img" ).height(newImageHeight);
 	contructPosMap2();
 	//$( "body" ).prepend( "<div>" + $( window ).width() + "</div>" );
@@ -86,25 +103,28 @@ $( window ).resize(function() {
 	doResizeWidth();
 });
 
-function goLeft () {
-	log.debug("goLeft() -> ENTER");
+
+// Keep a temporary backup of this method to implement goRight()
+function goLeftDeprecated () {
+	console.log("DEBUG: goLeft() -> ENTER");
 	
-	if (gFirstImgInViewPort == null) {
+	// TODO: verify second part of '||' (ignores items that are indexed zero in the DOM).
+	if (gFirstImgInViewPortIdx == null || gFirstImgInViewPortIdx <= 0) {
 		return;
 	}
 	
-	log.debug("goLeft() -> Current element is " + gFirstImgInViewPort.id);
+	console.log("DEBUG: goLeft() -> Current element is " + pos[gFirstImgInViewPortIdx].id);
 	// Find all the images in our parent, and then find our index with that set of images
-	var index = $(document).find(".img").index(gFirstImgInViewPort.el);
+	var index = $(document).find(".img").index(pos[gFirstImgInViewPortIdx].el);
 	var nextImageIndex = index - 1;
 	
-	log.debug("goLeft() -> Current element index is " + index);
+	console.log("DEBUG: goLeft() -> Current element index is " + index);
 	
 	var newLeftPos = 0;
 	var newTopPos = 0;
 	if (pos != null) {
 		
-		log.debug('goLeft() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
+		console.log('DEBUG: goLeft() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
 				' ; pos.length is ' + pos.length);
 		if (gFirstImgInViewPortIdx <= 0) {
     		newLeftPos = pos[pos.length - 1].left;
@@ -116,10 +136,10 @@ function goLeft () {
 		}
 	}
 	
-	log.debug('goLeft() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
+	console.log('DEBUG: goLeft() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
 			' ; prevPos: ' + pos[gFirstImgInViewPortIdx].left);
 	if (newLeftPos > pos[gFirstImgInViewPortIdx].left) {
-		log.debug('goLeft() -> nextLine');
+		console.log('DEBUG: goLeft() -> nextLine');
         
         $('html, body').animate({
             scrollTop: newTopPos - 10
@@ -136,29 +156,127 @@ function goLeft () {
             scrollLeft: newLeftPos - 30
         }, 500);
 	}
-	doResizeWidth();
+//	doResizeWidth();
+	--gFirstImgInViewPortIdx;
 }
 
-function goRight () {
-	log.debug("goRight() -> ENTER");
+function goLeft () {
+	console.log("DEBUG: goLeft() -> ENTER");
 	
-	if (gFirstImgInViewPort == null) {
+	if (gFirstImgInViewPortIdx == null || gFirstImgInViewPortIdx < 0) {
 		return;
 	}
 	
-	log.debug("Current element is " + gFirstImgInViewPort.id);
+	console.log("DEBUG: Current element is " + pos[gFirstImgInViewPortIdx].id);
+	
 	// Find all the images in our parent, and then find our index with that set of images
-	var index = $(document).find(".img").index(gFirstImgInViewPort.el);
+	var index = $(document).find(".img").index(pos[gFirstImgInViewPortIdx].el);
+	
+	var nextImageIndex = (index >= 1) ? (index - 1) : index;
+	
+	console.log("DEBUG: Current element index is " + index);
+	
+	var newLeftPos = 0;
+	var newTopPos = 0;
+	
+	if (pos != null) {
+		
+		console.log('DEBUG: goLeft() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
+				' ; pos.length is ' + pos.length);
+		if (gFirstImgInViewPortIdx >= pos.length - 1) {
+    		newLeftPos = 0;
+    		newTopPos = 0;
+		}
+		else {
+			newLeftPos = $('#' + pos[gFirstImgInViewPortIdx-1].id).offset().left;
+			newTopPos = $('#' + pos[gFirstImgInViewPortIdx-1].id).offset().top;
+		}
+	}
+	
+	console.log('DEBUG: goLeft() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
+			' ; prevPos: ' + $('#' + pos[gFirstImgInViewPortIdx-1].id).offset().left);
+	
+	// AE TODO: review this conditional logic now that the background leftMargin is 
+	//          animated for float'ed portfolio DIV 
+	if (newLeftPos >= $('#' + pos[gFirstImgInViewPortIdx].id).offset().left) {
+		// TODO: implement the end of portfolio behaviour.
+		alert("Intentionally doing nothing for the end of left nav.");
+		console.log('DEBUG: goLeft() -> nextLine, itentionally doing nothing for the end of left nav');
+		return;
+//        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+//        	'marginLeft': 0 // TODO: replace this with a constant if we want a baseline left margin, same for goRight.
+//        }, 500);
+//    	setTimeout(function(e) {
+//            $('html, body').animate({
+//                scrollTop: newTopPos - 10
+//            }, 800);
+//    	}, 800);
+	}
+	else {
+		
+		// This is the most common case, we are not at the end of our 'rope' going left.
+		console.log("DEBUG: goLeft() same line, gFirstImgInViewPortIdx is " + gFirstImgInViewPortIdx);
+		
+		// AE TODO: by M4 or so, remove all unused calculated values.
+		// Calculate a variety of values that can be used to calculated left margin animation (for float'ed div).
+		var divLocation = $('#' + pos[gFirstImgInViewPortIdx].id).parent().offset();
+		var marginLeft = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().css('marginLeft').replace('px', '');
+		var nextDivLocation = $('#' + pos[gFirstImgInViewPortIdx - 1].id).parent().offset();
+		var outerWidth = $('#' + pos[gFirstImgInViewPortIdx].id).offset().left + $('#' + pos[gFirstImgInViewPortIdx].id).offset().left;
+		var scrollBack = $('#' + pos[gFirstImgInViewPortIdx - 1].id).parent().position();
+
+		// Log all of these buggers to see what's most useful.
+		console.log("DEBUG: goLeft() About to animate left movement, new marginLeft for " +
+				pos[gFirstImgInViewPortIdx].id + " : " + 
+				$('#' + pos[gFirstImgInViewPortIdx - 1].id).offset().left + 
+				" ; outerWidth is " + outerWidth +
+				" ; divLocation.left is " + divLocation.left +
+				" ; nextDivLocation.left is " + nextDivLocation.left +
+				" ; marginLeft is " + marginLeft +
+				" ; scrollBack.left is " + scrollBack.left);
+		
+		// TODO: remove deprecated scroll on html and body, now we are sliding 
+		//       the background div by using marginLeft (float'ed div, otherwise, 'left).
+//        $('html, body').animate({
+//            scrollLeft: newLeftPos - 30
+//        }, 800);
+        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+        	'marginLeft': marginLeft - $('#' + pos[gFirstImgInViewPortIdx - 1].id).offset().left
+        }, 500);
+//        $("#source").animate({left: (left + 10), top:(top + 10 + ((current)*60))}, 500, function()
+//        		 { //comments });//        $('html, body').animate({
+//            left: newLeftPos - 30
+//        }, 500);
+	}
+	// AE TODO: disabled doResizeWidth() and incrementing gFirstImgInViewPortIdx manually.  Something about offsetting the left
+	// margin makes the elementInViewport() method fail to retrieve the correct index.
+	
+//	doResizeWidth();
+	--gFirstImgInViewPortIdx;
+	//doResizeWidth();
+}
+
+
+function goRight () {
+//	console.log("DEBUG: goRight() -> ENTER");
+	
+	if (gFirstImgInViewPortIdx == null || gFirstImgInViewPortIdx < 0) {
+		return;
+	}
+	
+//	console.log("DEBUG: Current element is " + pos[gFirstImgInViewPortIdx].id);
+	// Find all the images in our parent, and then find our index with that set of images
+	var index = $(document).find(".img").index(pos[gFirstImgInViewPortIdx].el);
 	var nextImageIndex = index + 1;
 	
-	log.debug("Current element index is " + index);
+//	console.log("DEBUG: Current element index is " + index);
 	
 	var newLeftPos = 0;
 	var newTopPos = 0;
 	if (pos != null) {
 		
-		log.debug('goRight() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
-				' ; pos.length is ' + pos.length);
+//		console.log('DEBUG: goRight() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
+//				' ; pos.length is ' + pos.length);
 		if (gFirstImgInViewPortIdx >= pos.length - 1) {
     		newLeftPos = 0;
     		newTopPos = 0;
@@ -169,45 +287,64 @@ function goRight () {
 		}
 	}
 	
-	log.debug('goRight() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
-			' ; prevPos: ' + pos[gFirstImgInViewPortIdx].left);
+//	console.log('DEBUG: goRight() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
+//			' ; prevPos: ' + pos[gFirstImgInViewPortIdx].left);
 	if (newLeftPos < pos[gFirstImgInViewPortIdx].left) {
-		log.debug('goRight() -> nextLine');
-        $('html, body').animate({
-            scrollLeft: newLeftPos - 30
-        }, 800);
-    	setTimeout(function(e) {
-            $('html, body').animate({
-                scrollTop: newTopPos - 10
-            }, 800);
-    	}, 800);
-	}
-	else {
-		log.debug("About to animate right movement, left: \"+=100\"");
+//		console.log('DEBUG: goRight() -> nextLine');
 //        $('html, body').animate({
 //            scrollLeft: newLeftPos - 30
 //        }, 800);
-		var divLocation = $('#' + gFirstImgInViewPort.id).offset();
-		var outerWidth = $('#' + gFirstImgInViewPort.id).outerWidth();
-        $('#client01_images').animate({
-        	'marginLeft': divLocation.left - outerWidth
+        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+        	'marginLeft': 0 // TODO: replace this with a constant if we want a baseline left margin, same for goRight.
+        }, 500);
+    	setTimeout(function(e) {
+            $('html, body').animate({
+                scrollTop: newTopPos - 10
+            }, 500);
+    	}, 500);
+	}
+	else {
+//		console.log("DEBUG: goRight() same line, gFirstImgInViewPortIdx is " + gFirstImgInViewPortIdx);
+		var divLocation = $('#' + pos[gFirstImgInViewPortIdx].id).parent().offset();
+		var marginLeft = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().css('marginLeft').replace('px', '');
+		var nextDivLocation = $('#' + pos[gFirstImgInViewPortIdx + 1].id).parent().offset();
+		var outerWidth = pos[gFirstImgInViewPortIdx + 1].left - pos[gFirstImgInViewPortIdx].left;
+		var scrollBack = $('#' + pos[gFirstImgInViewPortIdx + 1].id).parent().position();
+
+//		console.log("DEBUG: goRight() About to animate right movement, new marginLeft for " +
+//				pos[gFirstImgInViewPortIdx] + " : " + 
+//				" ; marginLeft is " + marginLeft +
+//				(marginLeft - nextDivLocation.left) + 
+//				" ; outerWidth is " + outerWidth +
+//				" ; divLocation.left is " + divLocation.left +
+//				" ; nextDivLocation.left is " + nextDivLocation.left +
+//				" ; scrollBack.left is " + scrollBack.left);
+//        $('html, body').animate({
+//            scrollLeft: newLeftPos - 30
+//        }, 800);
+        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+        	'marginLeft': (marginLeft - nextDivLocation.left)
         }, 500);
 //        $("#source").animate({left: (left + 10), top:(top + 10 + ((current)*60))}, 500, function()
 //        		 { //comments });//        $('html, body').animate({
 //            left: newLeftPos - 30
 //        }, 500);
 	}
-	doResizeWidth();
+	// AE TODO: disabled doResizeWidth() and incrementing gFirstImgInViewPortIdx manually.  Something about offsetting the left
+	// margin makes the elementInViewport() method fail to retrieve the correct index.
+	++gFirstImgInViewPortIdx;
+	//doResizeWidth();
 }
 
 function firstImageInViewport() {
     return function () {
-//    	log.debug('Inside: idFirstElementInViewport()');
+    	console.log('DEBUG: idFirstElementInViewport() -> IN');
 
     	var firstImgInViewPort = null;
     	for (var i = 0; i < pos.length; ++i) {
-            //log.debug('firstImageInViewport() -> loop element is ' + i + "; pos[i].el is " + pos[i].el[0]);
-    		if ( isElementInViewport(pos[i].el[0]) ) {
+        	console.log('DEBUG: idFirstElementInViewport() -> calling elementInViewport() for ' + 
+        			pos[i].id);
+    		if ( elementInViewport(pos[i].el[0]) ) {
 				if (firstImgInViewPort == null) {
 					firstImgInViewPort = pos[i];
 					firstImgInViewPortIdx = i;
@@ -218,25 +355,28 @@ function firstImageInViewport() {
 						firstImgInViewPortIdx = i;
 					}
 				}
+	            console.log('DEBUG: firstImageInViewport() -> loop element is ' + i + 
+	            		" ; pos[i].el is " + pos[i].el[0] + 
+	            		" ; firstImgInViewPortIdx is " + firstImgInViewPortIdx);
         	}
     	}
-//		if ( isElementInViewport(el) ) {
-//            //your code here, e.g. log.debug('is ' + el);
-//            log.debug('is ' + el);
+//		if ( elementInViewport(el) ) {
+//            //your code here, e.g. console.log('DEBUG: is ' + el);
+//            console.log('DEBUG: is ' + el);
 //        }
 
         if (firstImgInViewPort == null) {
-            log.debug("firstImageInViewport() -> no first image in viewport");
+            console.log("DEBUG: firstImageInViewport() -> no first image in viewport");
             gFirstImgInViewPort = null;
             gFirstImgInViewPortIdx = -1;
         } 
         else {
-//            log.debug("firstImageInViewport() -> first image in viewport: " + firstImgInViewPort);
-//            log.debug("firstImageInViewport() -> first image in viewport element: " + firstImgInViewPort.el);
-//            log.debug("firstImageInViewport() -> first image in viewport element id: " + firstImgInViewPort.id);
-//            log.debug("firstImageInViewport() -> first image in viewport pos... left: " + firstImgInViewPort.left + 
+//            console.log("DEBUG: firstImageInViewport() -> first image in viewport: " + firstImgInViewPort);
+//            console.log("DEBUG: firstImageInViewport() -> first image in viewport element: " + firstImgInViewPort.el);
+//            console.log("DEBUG: firstImageInViewport() -> first image in viewport element id: " + firstImgInViewPort.id);
+//            console.log("DEBUG: firstImageInViewport() -> first image in viewport pos... left: " + firstImgInViewPort.left + 
 //                    " ; top: " + firstImgInViewPort.top);
-            gFirstImgInViewPort = firstImgInViewPort;
+            //gFirstImgInViewPort = firstImgInViewPort;
             gFirstImgInViewPortIdx = firstImgInViewPortIdx;
         }
         
@@ -244,9 +384,58 @@ function firstImageInViewport() {
 //    contructPosMap();
 }
 
+function elementInViewport(el) {
+	  var top = el.offsetTop;
+	  var left = el.offsetLeft;
+	  var width = el.offsetWidth;
+	  var height = el.offsetHeight;
+
+	  while(el.offsetParent) {
+	    el = el.offsetParent;
+	    top += el.offsetTop;
+	    left += el.offsetLeft;
+	  }
+	  
+	  var returnVal = (
+			    top >= window.pageYOffset &&
+			    left >= window.pageXOffset &&
+			    (top) <= (window.pageYOffset + window.innerHeight) &&
+			    (left) <= (window.pageXOffset + window.innerWidth)
+			  );
+	  
+	  {
+//			console.log(
+//					"DEBUG: elementInViewport() -> element is in viewport: " + returnVal + " *** ");
+//
+//			console.log(
+//					"DEBUG: elementInViewport() -> " + 
+//					"       top: " + top + " window.pageYOffset: " + window.pageYOffset + " *** ");
+//			console.log(
+//					"DEBUG: elementInViewport() -> " + 
+//					"       left: " + left + " window.pageXOffset: " + window.pageXOffset + " *** ");
+//			console.log(
+//					"DEBUG: elementInViewport() -> " + 
+//					"       (top + height): " + (top + height) + 
+//					" (window.pageYOffset + window.innerHeight): " + (window.pageYOffset + window.innerHeight) + ";  *** ");
+//			console.log(
+//					"DEBUG: elementInViewport() -> " + 
+//					"       (left + width): " + (left + width) + 
+//					" (window.pageYOffset + window.innerHeight): " + (window.pageYOffset + window.innerHeight) + ";  *** "
+//					);  
+	  }
+
+	  return (returnVal);
+	}
+
 function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
 
+    var returnVal = (rect.top >= 0 && rect.left >= 0);
+    
+    if (returnVal) {
+    	console.log("DEBUG: isElementInViewport(el) -> element is in viewport " + el.id);
+    }
+    
     return (
         rect.top >= 0 &&
         rect.left >= 0 //&&
@@ -270,13 +459,21 @@ function cv_onLoad() {
 
 	//el = document.getElementById('client01_image01');
 	$(document).on('ready', $('body').removeClass("loading"));
-	$(window).on('load resize scroll', firstImageInViewport()); 
-	/* TODO: this looks like a very bad code */
-	setTimeout(firstImageInViewport(), 60); 
-	setTimeout(firstImageInViewport(), 6000);
+	//$(window).on('load resize scroll', firstImageInViewport()); 
+	/* TODO: this looks like very bad code */
+	//setTimeout(firstImageInViewport(), 60); 
+	//setTimeout(firstImageInViewport(), 6000);
 	
 	setTimeout(contructPosMap(), 60); 
-	setTimeout(contructPosMap(), 6000);
+	
+	// TODO: This is a bit of a hack copied from the internet for some (IE?) browsers
+	//       that have issues determining correct position right after loading.
+	//       When this would fire after six seconds of waiting, it would interfere with
+	//       the left navigation in the portfolio.  I assume it's because the coordinates 
+	//       would be stored in mid-transition, and were therefore corrupted somehow.
+//	setTimeout(contructPosMap(), 6000);
+	
+	gFirstImgInViewPortIdx = 0;
 	
 	$(document).keydown(function(e) {
 		switch(e.which) {

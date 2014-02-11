@@ -8,7 +8,8 @@
  <link type="text/css" rel="Stylesheet" href="blackbird/blackbird.css">
 
  <!-- JQuery library -->
- <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<!--  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+ <script src="js/jquery-1.10.2.min.js"></script>
 
  <!-- Chez Valois local JS library -->
  <script src="js/chezvalois.js" type="text/javascript"></script>

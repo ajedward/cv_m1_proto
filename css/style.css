@@ -15,10 +15,6 @@
 	left:190px;
 	top:15px;
 }
-
-#client01_images {
-	display: block;
-}
 	
 header #header {
 	height:40px;
@@ -137,4 +133,13 @@ body.loading .modal {
 
 .left {
     float: left;
+}
+
+.wfElement {
+    width: 700px;
+    height: 500px;
+    font-size: 48px;
+    padding-left: 200px;
+    padding-top: 300px;
+    border: 3px solid green;
 }
