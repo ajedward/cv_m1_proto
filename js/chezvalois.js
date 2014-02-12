@@ -86,51 +86,67 @@ function doResizeWidth() {
 function doResize() {
 	console.log("DEBUG: doResize() -> ENTER");
 	var newImageHeight = $( window ).height() - 60;
+	var newImageWidth = $( window ).width() - ($( window ).width() / 5);
 	
 	console.log("DEBUG: doResize() -> newImageHeight set to " + newImageHeight);
 	if (newImageHeight > IMG_MAXHEIGHT) {
 		//$( "body" ).prepend( "<div>" + newImageWidth + "</div>" );		
-		newImageHeight = IMG_MAXHEIGHT;
+		newImageWidth = IMG_MAXWIDTH;
 	}
 
 	console.log("DEBUG: doResize() -> resizing height for .img to " + newImageHeight);
-	$( ".img" ).height(newImageHeight);
+	$( ".img" ).width(newImageWidth);
 	contructPosMap2();
 	//$( "body" ).prepend( "<div>" + $( window ).width() + "</div>" );
 }
 
-$( window ).resize(function() {
+var adjustAfterResize = function() {
+	contructPosMap();
 	
-	doResizeWidth();
-//	
-//	
-//	var divImg1 = $('#' + pos[0].id).parent();
-//	var divImg1Location = divImg1.offset();
-//	var divImg2 = $('#' + pos[1].id).parent();
-//	var divImg2Location = divImg2.offset();
-//	var divImg3 = $('#' + pos[2].id).parent();
-//	var divImg3Location = divImg3.offset();
-//
-//	var currentImgDiv = $('#' + pos[gFirstImgInViewPortIdx].id).parent();
-//	var divLocation = currentImgDiv.offset();
-//	var portfolioSlider = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent();
-//	var marginLeft = portfolioSlider.css('margin-left').replace('px', '');
-//	
-//	var marginLeftNewVal = (0 - divLocation.left) + 'px';
-//	
-//	console.log("DEBUG: $( window ).resize() -> currentImgDiv.attr('id'): " + currentImgDiv.attr('id') +
-//			" ; gFirstImgInViewPortIdx: " + gFirstImgInViewPortIdx +
-//			" ; marginLeftNewVal: " + marginLeftNewVal +
-//			" ; port1div1.left: " + divImg1Location.left +
-//			" ; port1div2.left: " + divImg2Location.left +
-//			" ; port1div3.left: " + divImg3Location.left +
-//			" ; divLocation.left: " + divLocation.left
-//			);
-//	
-//	$('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().css('margin-left', marginLeftNewVal);
-//    $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
-//    	'marginLeft': 0 - divLocation.left
-//    }, 0);
+	gResizing = false;
+	var divImg1 = $('#' + pos[0].id).parent();
+	var divImg1Location = divImg1.offset();
+	var divImg2 = $('#' + pos[1].id).parent();
+	var divImg2Location = divImg2.offset();
+	var divImg3 = $('#' + pos[2].id).parent();
+	var divImg3Location = divImg3.offset();
+
+	var currentImgDiv = $('#' + pos[gFirstImgInViewPortIdx].id).parent();
+	var divLocation = currentImgDiv.offset();
+	var portfolioSlider = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent();
+	var marginLeft = portfolioSlider.css('margin-left').replace('px', '');
+	
+	var marginLeftNewVal = (0 - divLocation.left) + 'px';
+	
+	console.log("DEBUG: $( window ).resize() -> currentImgDiv.attr('id'): " + currentImgDiv.attr('id') +
+			" ; gFirstImgInViewPortIdx: " + gFirstImgInViewPortIdx +
+			" ; marginLeftNewVal: " + marginLeftNewVal +
+			" ; port1div1.left: " + divImg1Location.left +
+			" ; port1div2.left: " + divImg2Location.left +
+			" ; port1div3.left: " + divImg3Location.left +
+			" ; divLocation.left: " + divLocation.left
+			);
+	
+	$('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().css('margin-left', marginLeftNewVal);
+    $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+    	'marginLeft': 0 - divLocation.left
+    }, 0);
+    
+}
+
+var gResizing = false;
+var gAdjustResizeTOFunc = null;
+
+$( window ).resize(function() {
+	gResizing = true;
+	doResize();
+	
+	if (gAdjustResizeTOFunc != null) {
+		clearTimeout(gAdjustResizeTOFunc);
+	}
+	
+	gAdjustResizeTOFunc = setTimeout(adjustAfterResize,700);
+	
 });
 
 
@@ -271,7 +287,7 @@ function goLeft() {
 //        }, 800);
         $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
         	'marginLeft': marginLeft - $('#' + pos[gFirstImgInViewPortIdx - 1].id).offset().left
-        }, 300);
+        }, 400);
 //        $("#source").animate({left: (left + 10), top:(top + 10 + ((current)*60))}, 500, function()
 //        		 { //comments });//        $('html, body').animate({
 //            left: newLeftPos - 30
@@ -336,7 +352,7 @@ function goRight () {
 		setTimeout(function(e) {
 	        $('html, body').animate({
 	            scrollTop: newTopPos - 10
-	        }, 300);
+	        }, 400);
 		}, 700);
 	}
 	
@@ -558,4 +574,12 @@ function cv_onLoad() {
 	$(document).on( "click", globalOnClick() );
 	
 }
+
+
+
+
+
+/* Backbone.js testing */
+
+
 
