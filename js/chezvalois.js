@@ -100,7 +100,37 @@ function doResize() {
 }
 
 $( window ).resize(function() {
+	
 	doResizeWidth();
+//	
+//	
+//	var divImg1 = $('#' + pos[0].id).parent();
+//	var divImg1Location = divImg1.offset();
+//	var divImg2 = $('#' + pos[1].id).parent();
+//	var divImg2Location = divImg2.offset();
+//	var divImg3 = $('#' + pos[2].id).parent();
+//	var divImg3Location = divImg3.offset();
+//
+//	var currentImgDiv = $('#' + pos[gFirstImgInViewPortIdx].id).parent();
+//	var divLocation = currentImgDiv.offset();
+//	var portfolioSlider = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent();
+//	var marginLeft = portfolioSlider.css('margin-left').replace('px', '');
+//	
+//	var marginLeftNewVal = (0 - divLocation.left) + 'px';
+//	
+//	console.log("DEBUG: $( window ).resize() -> currentImgDiv.attr('id'): " + currentImgDiv.attr('id') +
+//			" ; gFirstImgInViewPortIdx: " + gFirstImgInViewPortIdx +
+//			" ; marginLeftNewVal: " + marginLeftNewVal +
+//			" ; port1div1.left: " + divImg1Location.left +
+//			" ; port1div2.left: " + divImg2Location.left +
+//			" ; port1div3.left: " + divImg3Location.left +
+//			" ; divLocation.left: " + divLocation.left
+//			);
+//	
+//	$('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().css('margin-left', marginLeftNewVal);
+//    $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+//    	'marginLeft': 0 - divLocation.left
+//    }, 0);
 });
 
 
@@ -116,7 +146,7 @@ function goLeftDeprecated () {
 	console.log("DEBUG: goLeft() -> Current element is " + pos[gFirstImgInViewPortIdx].id);
 	// Find all the images in our parent, and then find our index with that set of images
 	var index = $(document).find(".img").index(pos[gFirstImgInViewPortIdx].el);
-	var nextImageIndex = index - 1;
+//	var nextImageIndex = index - 1;
 	
 	console.log("DEBUG: goLeft() -> Current element index is " + index);
 	
@@ -160,7 +190,7 @@ function goLeftDeprecated () {
 	--gFirstImgInViewPortIdx;
 }
 
-function goLeft () {
+function goLeft() {
 	console.log("DEBUG: goLeft() -> ENTER");
 	
 	if (gFirstImgInViewPortIdx == null || gFirstImgInViewPortIdx < 0) {
@@ -172,35 +202,34 @@ function goLeft () {
 	// Find all the images in our parent, and then find our index with that set of images
 	var index = $(document).find(".img").index(pos[gFirstImgInViewPortIdx].el);
 	
-	var nextImageIndex = (index >= 1) ? (index - 1) : index;
+//	var nextImageIndex = (index >= 1) ? (index - 1) : index;
 	
 	console.log("DEBUG: Current element index is " + index);
 	
-	var newLeftPos = 0;
-	var newTopPos = 0;
+	var nextItemIdx = ((gFirstImgInViewPortIdx == 0) ? 0 : (gFirstImgInViewPortIdx-1));
 	
-	if (pos != null) {
-		
-		console.log('DEBUG: goLeft() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
-				' ; pos.length is ' + pos.length);
-		if (gFirstImgInViewPortIdx >= pos.length - 1) {
-    		newLeftPos = 0;
-    		newTopPos = 0;
-		}
-		else {
-			newLeftPos = $('#' + pos[gFirstImgInViewPortIdx-1].id).offset().left;
-			newTopPos = $('#' + pos[gFirstImgInViewPortIdx-1].id).offset().top;
-		}
+	if (gFirstImgInViewPortIdx == 0) {
+		alert("DEBUG: goLeft() -> (nextItemIdx == 0), Intentionally doing nothing for the end of left nav.");
+		console.log('DEBUG: goLeft() -> (nextItemIdx == 0), intentionally doing nothing for the end of left nav');
+		return;
 	}
 	
-	console.log('DEBUG: goLeft() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
-			' ; prevPos: ' + $('#' + pos[gFirstImgInViewPortIdx-1].id).offset().left);
+	console.log("DEBUG: gFirstImgInViewPortIdx is " + gFirstImgInViewPortIdx + 
+			   "; nextItemIdx is " + nextItemIdx +
+			   "; pos.length is " + pos.length);
 	
-	// AE TODO: review this conditional logic now that the background leftMargin is 
-	//          animated for float'ed portfolio DIV 
-	if (newLeftPos >= $('#' + pos[gFirstImgInViewPortIdx].id).offset().left) {
+	var curItemPortfolioContainer = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent();
+	var nextItemPortfolioContainer = $('#' + pos[nextItemIdx].id).parent().parent();
+	
+	console.log("DEBUG: curItemPortfolioContainer.attr('id') is " + curItemPortfolioContainer.attr('id') +
+			   "; nextItemPortfolioContainer.attr('id') is " + nextItemPortfolioContainer.attr('id')
+			   );
+
+	// If the parent of the parent (i.e. the portfolio container) 
+	// is different from the next...
+	if (curItemPortfolioContainer.attr('id') != nextItemPortfolioContainer.attr('id')) {
 		// TODO: implement the end of portfolio behaviour.
-		alert("Intentionally doing nothing for the end of left nav.");
+		alert("DEBUG: goLeft() -> prevLine, Intentionally doing nothing for the end of left nav.");
 		console.log('DEBUG: goLeft() -> nextLine, itentionally doing nothing for the end of left nav');
 		return;
 //        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
@@ -242,7 +271,7 @@ function goLeft () {
 //        }, 800);
         $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
         	'marginLeft': marginLeft - $('#' + pos[gFirstImgInViewPortIdx - 1].id).offset().left
-        }, 500);
+        }, 300);
 //        $("#source").animate({left: (left + 10), top:(top + 10 + ((current)*60))}, 500, function()
 //        		 { //comments });//        $('html, body').animate({
 //            left: newLeftPos - 30
@@ -258,73 +287,97 @@ function goLeft () {
 
 
 function goRight () {
-//	console.log("DEBUG: goRight() -> ENTER");
+	console.log("DEBUG: goRight() -> ENTER");
 	
 	if (gFirstImgInViewPortIdx == null || gFirstImgInViewPortIdx < 0) {
 		return;
 	}
 	
-//	console.log("DEBUG: Current element is " + pos[gFirstImgInViewPortIdx].id);
+	console.log("DEBUG: Current element is " + pos[gFirstImgInViewPortIdx].id);
 	// Find all the images in our parent, and then find our index with that set of images
 	var index = $(document).find(".img").index(pos[gFirstImgInViewPortIdx].el);
-	var nextImageIndex = index + 1;
 	
-//	console.log("DEBUG: Current element index is " + index);
+		var nextItemIdx = ((gFirstImgInViewPortIdx >= pos.length - 1) ? 0 : (gFirstImgInViewPortIdx+1));
 	
-	var newLeftPos = 0;
-	var newTopPos = 0;
-	if (pos != null) {
+	console.log("DEBUG: gFirstImgInViewPortIdx is " + gFirstImgInViewPortIdx + 
+			   "; nextItemIdx is " + nextItemIdx +
+			   "; pos.length is " + pos.length);
+	
+	var curItemPortfolioContainer = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent();
+	var nextItemPortfolioContainer = $('#' + pos[nextItemIdx].id).parent().parent();
+	
+	console.log("DEBUG: curItemPortfolioContainer.attr('id') is " + curItemPortfolioContainer.attr('id') +
+			   "; nextItemPortfolioContainer.attr('id') is " + nextItemPortfolioContainer.attr('id')
+			   );
+
+	// If the parent of the parent (i.e. the portfolio container) 
+	// is different from the next...
+	if (curItemPortfolioContainer.attr('id') != nextItemPortfolioContainer.attr('id')) {
 		
-//		console.log('DEBUG: goRight() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
-//				' ; pos.length is ' + pos.length);
-		if (gFirstImgInViewPortIdx >= pos.length - 1) {
-    		newLeftPos = 0;
-    		newTopPos = 0;
+		console.log('DEBUG: goRight() -> gFirstImgInViewPortIdx: ' + gFirstImgInViewPortIdx +
+				' ; pos.length is ' + pos.length);
+		if (nextItemIdx == 0) {
+    		newLeftPos = 0; // TODO: Check for assigning margin constants.
+    		newTopPos = 0; // TODO: Check for assigning margin constants.
 		}
 		else {
-			newLeftPos = pos[gFirstImgInViewPortIdx + 1].left;
-			newTopPos = pos[gFirstImgInViewPortIdx + 1].top;
+			// TODO: do we still need newLeftPos?
+			newLeftPos = $('#' + pos[nextItemIdx].id).offset().left; 
+			newTopPos = $('#' + pos[nextItemIdx].id).offset().top;
 		}
+
+		console.log('DEBUG: goRight() -> change line');
+//    $('html, body').animate({
+//        scrollLeft: newLeftPos - 30
+//    }, 800);
+	    $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+	    	'marginLeft': 0 // TODO: replace this with a constant if we want a baseline left margin, same for goRight.
+	    }, 500); // TODO: Change this value to a ratio based on the width of the entire portfolio.
+		setTimeout(function(e) {
+	        $('html, body').animate({
+	            scrollTop: newTopPos - 10
+	        }, 300);
+		}, 700);
 	}
 	
 //	console.log('DEBUG: goRight() -> newLeftPos: ' + newLeftPos + ' ; newTopPos: ' + newTopPos +
 //			' ; prevPos: ' + pos[gFirstImgInViewPortIdx].left);
-	if (newLeftPos < pos[gFirstImgInViewPortIdx].left) {
-//		console.log('DEBUG: goRight() -> nextLine');
-//        $('html, body').animate({
-//            scrollLeft: newLeftPos - 30
-//        }, 800);
-        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
-        	'marginLeft': 0 // TODO: replace this with a constant if we want a baseline left margin, same for goRight.
-        }, 500);
-    	setTimeout(function(e) {
-            $('html, body').animate({
-                scrollTop: newTopPos - 10
-            }, 500);
-    	}, 500);
-	}
+//	if (newLeftPos < pos[gFirstImgInViewPortIdx].left) {
+//		console.log('DEBUG: goRight() -> change line');
+////        $('html, body').animate({
+////            scrollLeft: newLeftPos - 30
+////        }, 800);
+//        $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
+//        	'marginLeft': 0 // TODO: replace this with a constant if we want a baseline left margin, same for goRight.
+//        }, 500); // TODO: Change this value to a ratio based on the width of the entire portfolio.
+//    	setTimeout(function(e) {
+//            $('html, body').animate({
+//                scrollTop: newTopPos - 10
+//            }, 500);
+//    	}, 500);
+//	}
 	else {
-//		console.log("DEBUG: goRight() same line, gFirstImgInViewPortIdx is " + gFirstImgInViewPortIdx);
+		console.log("DEBUG: goRight() same line, gFirstImgInViewPortIdx is " + gFirstImgInViewPortIdx);
 		var divLocation = $('#' + pos[gFirstImgInViewPortIdx].id).parent().offset();
 		var marginLeft = $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().css('marginLeft').replace('px', '');
-		var nextDivLocation = $('#' + pos[gFirstImgInViewPortIdx + 1].id).parent().offset();
-		var outerWidth = pos[gFirstImgInViewPortIdx + 1].left - pos[gFirstImgInViewPortIdx].left;
-		var scrollBack = $('#' + pos[gFirstImgInViewPortIdx + 1].id).parent().position();
+		var nextDivLocation = $('#' + pos[nextItemIdx].id).parent().offset();
+		var outerWidth = pos[nextItemIdx].left - pos[gFirstImgInViewPortIdx].left;
+		var scrollBack = $('#' + pos[nextItemIdx].id).parent().position();
 
-//		console.log("DEBUG: goRight() About to animate right movement, new marginLeft for " +
-//				pos[gFirstImgInViewPortIdx] + " : " + 
-//				" ; marginLeft is " + marginLeft +
-//				(marginLeft - nextDivLocation.left) + 
-//				" ; outerWidth is " + outerWidth +
-//				" ; divLocation.left is " + divLocation.left +
-//				" ; nextDivLocation.left is " + nextDivLocation.left +
-//				" ; scrollBack.left is " + scrollBack.left);
+		console.log("DEBUG: goRight() About to animate right movement, new marginLeft for " +
+				pos[gFirstImgInViewPortIdx] + " : " + 
+				" ; marginLeft is " + marginLeft +
+				(marginLeft - nextDivLocation.left) + 
+				" ; outerWidth is " + outerWidth +
+				" ; divLocation.left is " + divLocation.left +
+				" ; nextDivLocation.left is " + nextDivLocation.left +
+				" ; scrollBack.left is " + scrollBack.left);
 //        $('html, body').animate({
 //            scrollLeft: newLeftPos - 30
 //        }, 800);
         $('#' + pos[gFirstImgInViewPortIdx].id).parent().parent().animate({
         	'marginLeft': (marginLeft - nextDivLocation.left)
-        }, 500);
+        }, 300);
 //        $("#source").animate({left: (left + 10), top:(top + 10 + ((current)*60))}, 500, function()
 //        		 { //comments });//        $('html, body').animate({
 //            left: newLeftPos - 30
@@ -332,7 +385,7 @@ function goRight () {
 	}
 	// AE TODO: disabled doResizeWidth() and incrementing gFirstImgInViewPortIdx manually.  Something about offsetting the left
 	// margin makes the elementInViewport() method fail to retrieve the correct index.
-	++gFirstImgInViewPortIdx;
+	gFirstImgInViewPortIdx = nextItemIdx;
 	//doResizeWidth();
 }
 
