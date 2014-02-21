@@ -1,5 +1,17 @@
 @CHARSET "UTF-8";
 
+#portfolioDescContainer {
+    position: fixed;
+    margin-top: 200px;
+    max-width: 300px;
+    height: 500px;
+    overflow-Y: scroll;
+    border-top: 3px solid green;
+    border-bottom: 3px solid green;
+    border-left: 3px solid green;
+    visibility:hidden;
+}
+
 #logo_container {
 	position: fixed;
 	opacity:0.3;
@@ -16,6 +28,19 @@
 	top:15px;
 }
 	
+#portfolioNav {
+    position: fixed;
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+    left:70%;
+    top:80%;
+}
+
+.img {
+	padding-top: 30px;
+    padding-left: 30px;
+}
+    
 header #header {
 	height:40px;
 }
