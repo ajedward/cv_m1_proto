@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+#page {
+    padding-bottom: 150px;
+}
+
 #portfolioDescContainer {
     position: fixed;
     margin-top: 200px;
@@ -28,16 +32,76 @@
 	top:15px;
 }
 	
-#portfolioNav {
+#portfolioInfo {
     position: fixed;
     opacity:0.8;
     filter:alpha(opacity=80); /* For IE8 and earlier */
-    left:70%;
-    top:80%;
+    left:60%;
+    top:75%;
+}
+
+#portfolioNav li {
+	background:none;
+	display:inline;
+	padding-left: 3px;
+} 
+
+#portfolioInfoArea {
+    position: fixed;
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+    left:10%;
+    top:75%;
+/*    background-image: url('nav_sketch_statusCircle.png');
+    background-repeat: no-repeat; */
+}
+
+#portfolioInfoArea li {
+    background:none;
+    display:inline;
+    padding-left: 3px;
+}
+
+#portfolioInfoAreaIdxContainer {
+    padding-left: 12px;
+    padding-top: 13px;
+    position: fixed;
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+    left:10%;
+    top:75%;
+    z-index: 30;
+}
+
+#portfolioInfoAreaIdx {
+    background:none;
+    display:inline;
+    padding-left: 3px;
+}
+
+#portfolioShortDescContainer {
+    /* font-family: Garamond, Georgia, Times, "Times New Roman"; */
+    font-family: Trebuchet, Verdana, Arial, Geneva, Helvetica, "Lucida Sans";
+    position: fixed;
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+    left:10%;
+    top:84%;
+    z-index: 60;
+    font-style: italic;
+    font-size: 1.15em;
+}
+
+.portfolioDisabled {
+    opacity:0.3;
+    filter:alpha(opacity=30); /* For IE8 and earlier */
+}
+
+#piIndex {
 }
 
 .img {
-	padding-top: 30px;
+    padding-top: 30px;
     padding-left: 30px;
 }
     
@@ -74,6 +138,7 @@ ul {
 	background:none;
 	float: left;
 	padding:0;
+/*	padding-left: 120px; */
 }/* below rules are only there for reference */
 
 .portfolio li img {
@@ -169,3 +234,4 @@ body.loading .modal {
     padding-top: 300px;
     border: 3px solid green;
 }
+

@@ -3,14 +3,6 @@
 <head>
 <meta charset="utf-8">
 
-<?php
-
-$portfolio01 = array('portfolioId' => '1',
-		     'portfolioName' => 'Point G'); 
-
-$portfolio01 = json_encode($portfolio01);
-?>
-
 <!-- Blackbird logging library -->
  <script type="text/javascript" src="blackbird/blackbird.js"></script>
  <link type="text/css" rel="Stylesheet" href="blackbird/blackbird.css">
@@ -94,44 +86,44 @@ $portfolio01 = json_encode($portfolio01);
         <section class='portfolio' id='client01_images'>
         
           <article id='client01_image01' class='portfolioElement left'>
-          <img id='client01_image01_img' alt='img' class='img' src='img/client01_image01.jpg' /></article>
+          <img id='client01_image01_img' alt='img' class='img' src='img/pf/client01_image01.jpg' /></article>
           
           <article id='client01_image02' class='portfolioElement left'>
-          <img id='client01_image02_img' alt='img' class='img' src='img/client01_image02.jpg' /></article>
+          <img id='client01_image02_img' alt='img' class='img' src='img/pf/client01_image02.jpg' /></article>
           
           <article id='client01_image03' class='portfolioElement left'>
-          <img id='client01_image03_img' alt='img' class='img' src='img/client01_image03.jpg' /></article>
+          <img id='client01_image03_img' alt='img' class='img' src='img/pf/client01_image03.jpg' /></article>
           
           <article id='client01_image04' class='portfolioElement left'>
-          <img id='client01_image04_img' alt='img' class='img' src='img/client01_image04.jpg' /></article>
+          <img id='client01_image04_img' alt='img' class='img' src='img/pf/client01_image04.jpg' /></article>
           
           <article id='client01_image05' class='portfolioElement left'>
-          <img id='client01_image05_img' alt='img' class='img' src='img/client01_image05.jpg' /></article>
+          <img id='client01_image05_img' alt='img' class='img' src='img/pf/client01_image05.jpg' /></article>
           
           <article id='client01_image06' class='portfolioElement left'>
-          <img id='client01_image06_img' alt='img' class='img' src='img/client01_image06.jpg' /></article>
+          <img id='client01_image06_img' alt='img' class='img' src='img/pf/client01_image06.jpg' /></article>
           
           </section>
           
-        <section class='portfolio' id='client02_images'>
+        <section class='portfolio portfolioDisabled' id='client02_images'>
         
           <article id='client02_image01' class='portfolioElement left'>
-          <img id='client02_image01_img' alt='img' class='img' src='img/client02_image01.jpg' /></article>
+          <img id='client02_image01_img' alt='img' class='img' src='img/pf/client02_image01.jpg' /></article>
           
           <article id='client02_image02' class='portfolioElement left'>
-          <img id='client02_image02_img' alt='img' class='img' src='img/client02_image02.jpg' /></article>
+          <img id='client02_image02_img' alt='img' class='img' src='img/pf/client02_image02.jpg' /></article>
           
           <article id='client02_image03' class='portfolioElement left'>
-          <img id='client02_image03_img' alt='img' class='img' src='img/client02_image03.jpg' /></article>
+          <img id='client02_image03_img' alt='img' class='img' src='img/pf/client02_image03.jpg' /></article>
           
           <article id='client02_image04' class='portfolioElement left'>
-          <img id='client02_image04_img' alt='img' class='img' src='img/client02_image04.jpg' /></article>
+          <img id='client02_image04_img' alt='img' class='img' src='img/pf/client02_image04.jpg' /></article>
           
           <article id='client02_image05' class='portfolioElement left'>
-          <img id='client02_image05_img' alt='img' class='img' src='img/client02_image05.jpg' /></article>
+          <img id='client02_image05_img' alt='img' class='img' src='img/pf/client02_image05.jpg' /></article>
           
           <article id='client02_image06' class='portfolioElement left'>
-          <img id='client02_image06_img' alt='img' class='img' src='img/client02_image06.jpg' /></article>
+          <img id='client02_image06_img' alt='img' class='img' src='img/pf/client02_image06.jpg' /></article>
           
         </section> <!-- section class='portfolio' id='client01_images'  -->
           
@@ -140,73 +132,91 @@ $portfolio01 = json_encode($portfolio01);
        <section id='portfolioInfo'>
         <nav id='portfolioNav'>
           <ul>
-            <li><a id='pnPrevItem' href='#'>Item Précédent</a></li>
-            <li><a id='pnNextItem' href='#'>Item Suivant</a></li>
-            <li><a id='pnPrevPortfolio' href='#'>Portfolio Précédent</a></li>
-            <li><a id='pnNextPortfolio' href='#'>Portfolio Suivant</a></li>
+            <li><a id='pnPrevItem' href='#'><img src='img/leftArrow.png' /></a></li>
+            <li><a id='pnNextItem' href='#'><img src='img/rightArrow.png' /></a></li>
+            <!-- li><a id='pnPrevPortfolio' href='#'>Portfolio Précédent</a></li>
+            <li><a id='pnNextPortfolio' href='#'>Portfolio Suivant</a></li -->
             </ul>
         </nav>
        </section>
-     
+
+       <section id='portfolioShortDescContainer'>
+          <ul>
+            <li id='portfolioShortDesc'></li>
+          </ul>
+       </section>
+
+       <section id='portfolioInfoArea'>
+          <ul>
+            <li><img alt='status circle' src='img/nav_sketch_statusCircle.png' /></li>
+          </ul>
+       </section>
+
+       <section id='portfolioInfoAreaIdxContainer'>
+          <ul>
+            <li id='portfolioInfoAreaIdx'></li>
+          </ul>
+       </section>
+
 <!--     <ul class='clientList'> -->
 <!--       <li class='clientItem' id='client01'> -->
 <!--         <ul class='imageList' id='client01_images'> -->
 <!--           <li id='client01_image01'> -->
-<!--           <img id='client01_image01_img' alt='img' class='img' src='img/client01_image01.jpg' /></li> -->
+<!--           <img id='client01_image01_img' alt='img' class='img' src='img/pf/client01_image01.jpg' /></li> -->
 <!--           <li id='client01_image02'> -->
-<!--           <img id='client01_image02_img' alt='img' class='img' src='img/client01_image02.jpg' /></li> -->
+<!--           <img id='client01_image02_img' alt='img' class='img' src='img/pf/client01_image02.jpg' /></li> -->
 <!--           <li id='client01_image03'> -->
-<!--           <img id='client01_image03_img' alt='img' class='img' src='img/client01_image03.jpg' /></li> -->
+<!--           <img id='client01_image03_img' alt='img' class='img' src='img/pf/client01_image03.jpg' /></li> -->
 <!--           <li id='client01_image04'> -->
-<!--           <img id='client01_image04_img' alt='img' class='img' src='img/client01_image04.jpg' /></li> -->
+<!--           <img id='client01_image04_img' alt='img' class='img' src='img/pf/client01_image04.jpg' /></li> -->
 <!--           <li id='client01_image05'> -->
-<!--           <img id='client01_image05_img' alt='img' class='img' src='img/client01_image05.jpg' /></li> -->
+<!--           <img id='client01_image05_img' alt='img' class='img' src='img/pf/client01_image05.jpg' /></li> -->
 <!--           <li id='client01_image06'> -->
-<!--           <img id='client01_image06_img' alt='img' class='img' src='img/client01_image06.jpg' /></li> -->
+<!--           <img id='client01_image06_img' alt='img' class='img' src='img/pf/client01_image06.jpg' /></li> -->
 <!--           <li id='client01_image07'> -->
-<!--           <img id='client01_image07_img' alt='img' class='img' src='img/client01_image07.jpg' /></li> -->
+<!--           <img id='client01_image07_img' alt='img' class='img' src='img/pf/client01_image07.jpg' /></li> -->
 <!--           <li id='client01_image08'> -->
-<!--           <img id='client01_image08_img' alt='img' class='img' src='img/client01_image08.jpg' /></li> -->
+<!--           <img id='client01_image08_img' alt='img' class='img' src='img/pf/client01_image08.jpg' /></li> -->
 <!--         </ul> -->
 <!--       </li> -->
 <!--       <li id='client02'> -->
 <!--         <ul class='imageList' id='client02_images'> -->
 <!--           <li id='client02_image01'> -->
-<!--           <img id='client02_image01_img' alt='img' class='img' src='img/client02_image01.jpg' /></li> -->
+<!--           <img id='client02_image01_img' alt='img' class='img' src='img/pf/client02_image01.jpg' /></li> -->
 <!--           <li id='client02_image02'> -->
-<!--           <img id='client02_image02_img' alt='img' class='img' src='img/client02_image02.jpg' /></li> -->
+<!--           <img id='client02_image02_img' alt='img' class='img' src='img/pf/client02_image02.jpg' /></li> -->
 <!--           <li id='client02_image03'> -->
-<!--           <img id='client02_image03_img' alt='img' class='img' src='img/client02_image03.jpg' /></li> -->
+<!--           <img id='client02_image03_img' alt='img' class='img' src='img/pf/client02_image03.jpg' /></li> -->
 <!--           <li id='client02_image04'> -->
-<!--           <img id='client02_image04_img' alt='img' class='img' src='img/client02_image04.jpg' /></li> -->
+<!--           <img id='client02_image04_img' alt='img' class='img' src='img/pf/client02_image04.jpg' /></li> -->
 <!--           <li id='client02_image05'> -->
-<!--           <img id='client02_image05_img' alt='img' class='img' src='img/client02_image05.jpg' /></li> -->
+<!--           <img id='client02_image05_img' alt='img' class='img' src='img/pf/client02_image05.jpg' /></li> -->
 <!--           <li id='client02_image07'> -->
-<!--           <img id='client02_image08_img' alt='img' class='img' src='img/client02_image08.jpg' /></li> -->
+<!--           <img id='client02_image08_img' alt='img' class='img' src='img/pf/client02_image08.jpg' /></li> -->
 <!--           <li id='client02_image08'> -->
-<!--           <img id='client02_image06_img' alt='img' class='img' src='img/client02_image06.jpg' /></li> -->
+<!--           <img id='client02_image06_img' alt='img' class='img' src='img/pf/client02_image06.jpg' /></li> -->
 <!--           <li id='client02_image09'> -->
-<!--           <img id='client02_image07_img' alt='img' class='img' src='img/client02_image07.jpg' /></li> -->
+<!--           <img id='client02_image07_img' alt='img' class='img' src='img/pf/client02_image07.jpg' /></li> -->
 <!--           <li id='client02_image10'> -->
-<!--           <img id='client02_image09_img' alt='img' class='img' src='img/client02_image09.jpg' /></li> -->
+<!--           <img id='client02_image09_img' alt='img' class='img' src='img/pf/client02_image09.jpg' /></li> -->
 <!--         </ul> -->
 <!--       </li> -->
 <!--       <li id='client03'>  -->
 <!--         <ul class='imageList' id='client03_images'> -->
 <!--           <li id='client03_image01'> -->
-<!--           <img id='client03_image01_img' alt='img' class='img' src='img/client03_image01.jpg' /></li> -->
+<!--           <img id='client03_image01_img' alt='img' class='img' src='img/pf/client03_image01.jpg' /></li> -->
 <!--           <li id='client03_image02'> -->
-<!--           <img id='client03_image02_img' alt='img' class='img' src='img/client03_image02.jpg' /></li> -->
+<!--           <img id='client03_image02_img' alt='img' class='img' src='img/pf/client03_image02.jpg' /></li> -->
 <!--           <li id='client03_image03'> -->
-<!--           <img id='client03_image03_img' alt='img' class='img' src='img/client03_image03.jpg' /></li> -->
+<!--           <img id='client03_image03_img' alt='img' class='img' src='img/pf/client03_image03.jpg' /></li> -->
 <!--           <li id='client03_image04'> -->
-<!--           <img id='client03_image04_img' alt='img' class='img' src='img/client03_image04.jpg' /></li> -->
+<!--           <img id='client03_image04_img' alt='img' class='img' src='img/pf/client03_image04.jpg' /></li> -->
 <!--           <li id='client03_image05'> -->
-<!--           <img id='client03_image05_img' alt='img' class='img' src='img/client03_image05.jpg' /></li> -->
+<!--           <img id='client03_image05_img' alt='img' class='img' src='img/pf/client03_image05.jpg' /></li> -->
 <!--           <li id='client03_image06'> -->
-<!--           <img id='client03_image06_img' alt='img' class='img' src='img/client03_image06.jpg' /></li> -->
+<!--           <img id='client03_image06_img' alt='img' class='img' src='img/pf/client03_image06.jpg' /></li> -->
 <!--           <li id='client03_image07'> -->
-<!--           <img id='client03_image07_img' alt='img' class='img' src='img/client03_image07.jpg' /></li> -->
+<!--           <img id='client03_image07_img' alt='img' class='img' src='img/pf/client03_image07.jpg' /></li> -->
 <!--         </ul> -->
 <!--       </li> -->
 <!--     </ul> -->
