@@ -13,10 +13,12 @@ body {
 }
 
 header {
+	position: relative;
 	width: 100%;
 	margin: 0px auto;
-	height: 85px;
-	background-color: white;
+	height: 70px;
+	background: white;
+	width: 100%;
 }
 
 h1 {
@@ -39,39 +41,95 @@ h2 {
 	font-weight: normal;
 }
 
-#outerContainer {
+#mainWrap {
+	position: relative;
+}
+
+#logo {
+	width: 15%;
+	content:url(http://placehold.it/350x150);
+}
+
+.outerContainer {
 	display: table;
 	position: absolute;
 	height: 100%;
 	width: 100%;
 }
 
-#middleContainer {
+.middleContainer {
 	display: table-cell;
 	vertical-align: middle;
 }
 
-#innerContainer {
+.innerContainer {
 	margin-left: auto;
 	margin-right: auto;
 	width: 70%; /*whatever width you want*/;
 	/*height: 800px;*/
 	overflow: auto;
+	max-width: 1200px;
+}
+
+#innerContainerHdr {
+	width: 100%;
+}
+
+header {
+	padding-top: 15px;
+}
+
+.menuIcon {
+	visibility: hidden;
+}
+
+.menuMainText {
+	visibility: visible;
+}
+
+.menuLangText {
+	visibility: visible;
+}
+
+@media screen and (max-width: 620px) {
+	.menuIcon {
+		visibility: visible;
+	}
+	.menuMainText {
+		visibility: hidden;
+	}
+	.menuLangText {
+		visibility: hidden;
+	}
+	#innerContainerHdr {
+		width: 100%;
+	}
+	.menuMainText {
+		left: 100px;
+	}
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
 }
 
 /* IE7: add the following
-#outerContainer {
+.outerContainer {
     display: inline-block;
     top: 0;
 }
 
-#middleContainer {
+.middleContainer {
     display: inline-block;
     top: 50%;
     position: relative;
 }
 
-#innerContainer {
+.innerContainer {
     display: inline-block;
     top: -50%;
     position: relative;
@@ -84,17 +142,36 @@ h2 {
 
 <body>
 
-	<!-- 	<header></header> -->
-	<div id="outerContainer">
-		<div id="middleContainer">
-			<div id="innerContainer">
-				<h1 id="fittext1">
-					<strong>Que faisons-nous?</strong>
-				</h1>
-				<h2 id="fittext2">
-					Grâce au design, nous&nbsp;aidons les entreprises et les individus
-					à se connecter.
-					</h1>
+	<header>
+<!-- 		<div class="outerContainer"> -->
+<!-- 			<div class="middleContainer"> -->
+				<div id='innerContainerHdr' class="innerContainer">
+					<img id='logo' class='logo left'
+						src='img/demo/cv_logo_smallest.png' /> <img id='menuIcon'
+						class='menuIcon right' src='img/demo/cv_menu_smallest.png' />
+					<div id='menuMainText' class='menuMainText left'>
+						<div class='menuTextItem left'>Our Mindset</div>
+						<div class='menuTextItem left'>About us</div>
+						<div class='menuTextItem left'>Our work</div>
+						<div class='menuTextItem left'>Contact us</div>
+						<div class='menuTextItem left'>What the FAQ's</div>
+					</div>
+					<div id='menuLangText' class='menuLangText right'>
+						<div class='menuTextItem left'>Fr</div>
+					</div>
+<!-- 				</div> -->
+<!-- 			</div> -->
+		</div>
+	</header>
+	<section id='mainWrap'>
+		<div class="outerContainer">
+			<div class="middleContainer">
+				<div class="innerContainer">
+					<h2 id="fittext2">
+						<strong>Que faisons-nous?</strong>
+					</h2>
+					<h1 id="fittext1">Grâce au design, nous&nbsp;aidons les entreprises
+						et les individus à se connecter.</h1>
 					<h3 id="fittext3" class="definition">
 						<strong>Le design</strong>. Pour nous, c’est l’intangible devenant
 						tangible... c’est « l’imagination constructive »… C’est l’idée
@@ -112,17 +189,18 @@ h2 {
 						indissociable de la stratégie.
 					</h3>
 
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script src="js/jquery.fittext.js"></script>
 	<script type="text/javascript">
-		$("#fittext1").fitText(1.2, { minFontSize: '24px', maxFontSize: '72px' });
- 		$("#fittext2").fitText(1.2, { minFontSize: '18px', maxFontSize: '48px' });
-		$("#fittext3").fitText(2.4, { minFontSize: '12px', maxFontSize: '24px' });
+// 		$("#fittext1").fitText(1.2, { minFontSize: '24px', maxFontSize: '72px' });
+//  		$("#fittext2").fitText(1.2, { minFontSize: '18px', maxFontSize: '36px' });
+// 		$("#fittext3").fitText(2.4, { minFontSize: '12px', maxFontSize: '24px' });
 		</script>
 
 </body>
